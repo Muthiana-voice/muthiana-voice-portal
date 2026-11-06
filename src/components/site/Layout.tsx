@@ -1,157 +1,41 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
-import { Facebook, Instagram, Youtube, Menu, X, ImageIcon } from "lucide-react";
+import { Menu, ImageIcon, ArrowUpRight } from "lucide-react";
+import { siFacebook, siWhatsapp, siInstagram } from "simple-icons";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { navItems } from "./nav";
 
 export function Logo({ size = "md" }: { size?: "md" | "sm" }) {
-  // Espaço reservado para o logótipo oficial — substituir por <img src={logo} />
-  const dim = size === "md" ? "h-14 w-14" : "h-11 w-11";
-  return (
-    <div className={`${dim} shrink-0 rounded-full border-2 border-dashed border-accent/60 bg-accent-soft flex items-center justify-center`} aria-label="Logótipo oficial da Muthiana Voice (espaço reservado)">
-      <ImageIcon className="h-5 w-5 text-accent" aria-hidden />
-    </div>
-  );
+  return <div className={`flex items-center justify-center gap-3 border border-dashed border-primary/30 bg-background ${size === "md" ? "h-14 w-48 sm:w-60" : "h-12 w-48"}`} aria-label="Logótipo oficial da Muthiana Voice (espaço reservado)"><ImageIcon className="h-5 w-5 shrink-0 text-accent" aria-hidden /><div><p className="font-display text-lg font-semibold leading-tight text-primary">Muthiana Voice</p><p className="text-[10px] uppercase text-muted-foreground">Voz da Mulher</p></div></div>;
 }
-
-const socials = [
-  { label: "Facebook", href: "https://facebook.com", icon: Facebook },
-  { label: "Instagram", href: "#", icon: Instagram },
-  { label: "YouTube", href: "#", icon: Youtube },
-];
-
+const socials = [{ label: "Facebook", icon: siFacebook }, { label: "WhatsApp", icon: siWhatsapp }, { label: "Instagram", icon: siInstagram }];
 export function Socials({ inverted = false }: { inverted?: boolean }) {
-  return (
-    <ul className="flex items-center gap-2">
-      {socials.map(({ label, href, icon: Icon }) => (
-        <li key={label}>
-          <a href={href} target="_blank" rel="noreferrer" aria-label={label}
-            className={`flex h-9 w-9 items-center justify-center rounded-full border transition-colors ${inverted ? "border-primary-foreground/25 text-primary-foreground hover:bg-accent hover:border-accent" : "border-border text-primary hover:bg-primary hover:text-primary-foreground"}`}>
-            <Icon className="h-4 w-4" />
-          </a>
-        </li>
-      ))}
-    </ul>
-  );
+  return <ul className="flex items-center gap-2">{socials.map(({ label, icon }) => <li key={label}><Button variant="ghost" size="icon" disabled title={`${label}: endereço oficial por disponibilizar`} aria-label={`${label}: endereço oficial por disponibilizar`} className={inverted ? "text-primary-foreground disabled:opacity-70" : "text-primary disabled:opacity-70"}><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d={icon.path} /></svg></Button></li>)}</ul>;
 }
-
 function NavList({ onNavigate }: { onNavigate?: () => void }) {
-  return (
-    <nav aria-label="Navegação principal">
-      <ul className="space-y-1">
-        {navItems.map(({ to, label, icon: Icon }) => (
-          <li key={to}>
-            <Link to={to} onClick={onNavigate} activeOptions={{ exact: true }}
-              className="group flex items-center gap-3 rounded-md border-l-[3px] border-transparent px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-primary-soft hover:text-primary"
-              activeProps={{ className: "!border-accent bg-primary !text-primary-foreground hover:!bg-primary" }}>
-              <Icon className="h-[18px] w-[18px] shrink-0" />
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
+  return <nav aria-label="Navegação principal"><ul className="space-y-1">{navItems.map(({ to, label, icon: Icon }) => <li key={to}><Link to={to} onClick={onNavigate} activeOptions={{ exact: true }} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm font-semibold text-primary hover:bg-primary-soft" activeProps={{ className: "bg-primary text-primary-foreground hover:bg-primary" }}><Icon className="h-[18px] w-[18px] shrink-0" />{label}</Link></li>)}</ul></nav>;
 }
-
 export function Layout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
-        <div className="h-1 bg-accent" />
-        <div className="flex items-center justify-between gap-4 px-4 py-3 lg:px-8">
-          <Link to="/" className="flex min-w-0 items-center gap-3">
-            <Logo />
-            <div className="min-w-0">
-              <p className="font-display text-lg font-semibold leading-tight text-primary sm:text-xl">Muthiana Voice</p>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Voz da Mulher</p>
-            </div>
-          </Link>
-          <div className="hidden sm:block"><Socials /></div>
-          <button onClick={() => setOpen(true)} className="flex h-10 w-10 items-center justify-center rounded-md border text-primary lg:hidden" aria-label="Abrir menu">
-            <Menu className="h-5 w-5" />
-          </button>
-        </div>
-      </header>
-
-      <div className="flex">
-        <aside className="sticky top-[81px] hidden h-[calc(100vh-81px)] w-64 shrink-0 border-r bg-secondary px-4 py-6 lg:block">
-          <p className="mb-3 px-3 text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Menu</p>
-          <NavList />
-        </aside>
-
-        {open && (
-          <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
-            <div className="absolute inset-0 bg-overlay/60" onClick={() => setOpen(false)} />
-            <div className="absolute left-0 top-0 h-full w-72 max-w-[85vw] bg-background p-5 shadow-xl animate-in slide-in-from-left">
-              <div className="mb-6 flex items-center justify-between">
-                <span className="font-display text-lg font-semibold text-primary">Menu</span>
-                <button onClick={() => setOpen(false)} aria-label="Fechar menu" className="flex h-9 w-9 items-center justify-center rounded-md border"><X className="h-5 w-5" /></button>
-              </div>
-              <NavList onNavigate={() => setOpen(false)} />
-              <div className="mt-8"><Socials /></div>
-            </div>
-          </div>
-        )}
-
-        <div className="min-w-0 flex-1">
-          <main>{children}</main>
-          <Footer />
-        </div>
+  return <div className="min-h-screen bg-background">
+    <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
+      <div className="site-container grid h-24 grid-cols-[1fr_auto_1fr] items-center gap-3">
+        <Sheet open={open} onOpenChange={setOpen}><SheetTrigger asChild><Button variant="ghost" size="icon" className="h-11 w-11 justify-self-start text-primary" aria-label="Abrir menu"><Menu className="size-6" /></Button></SheetTrigger><SheetContent side="left" aria-describedby={undefined}><SheetTitle className="mb-8 font-display text-2xl text-primary">Muthiana Voice</SheetTitle><NavList onNavigate={() => setOpen(false)} /><div className="mt-8 border-t pt-6"><Socials /></div></SheetContent></Sheet>
+        <Link to="/" aria-label="Muthiana Voice — Página Inicial"><Logo /></Link>
+        <div className="hidden justify-self-end sm:block"><Socials /></div>
       </div>
+    </header>
+    <div className="ticker overflow-hidden border-b bg-primary py-3 text-primary-foreground" aria-label="Muthiana Voice é uma organização religiosa...">
+      <div className="ticker-track" aria-hidden>{[0, 1].map(n => <div key={n} className="flex shrink-0 items-center gap-12 px-6 text-xs sm:text-sm">{[0, 1, 2].map(i => <span key={i} className="flex items-center gap-12"><span>Muthiana Voice é uma organização religiosa...</span><span className="text-accent">✦</span></span>)}</div>)}</div>
     </div>
-  );
+    <main>{children}</main><Footer />
+  </div>;
 }
-
+const footerNav = [{ to: "/", label: "Página Inicial" }, { to: "/sobre", label: "Sobre Nós" }, { to: "/contactos", label: "Contato" }, { to: "/privacidade", label: "Política de Privacidade" }, { to: "/parceiros", label: "Parceiros" }] as const;
 function Footer() {
-  return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="grid gap-10 px-5 py-12 md:grid-cols-3 lg:px-10">
-        <div>
-          <div className="flex items-center gap-3">
-            <Logo size="sm" />
-            <div>
-              <p className="font-display text-lg font-semibold">Muthiana Voice</p>
-              <p className="text-xs uppercase tracking-[0.18em] text-accent">Voz da Mulher</p>
-            </div>
-          </div>
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-primary-foreground/75">
-            Associação moçambicana sem fins lucrativos, de âmbito nacional, dedicada ao desenvolvimento e empoderamento da mulher e da rapariga.
-          </p>
-        </div>
-        <div>
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-accent">Navegação</p>
-          <ul className="grid grid-cols-2 gap-2 text-sm">
-            {navItems.map((n) => (
-              <li key={n.to}><Link to={n.to} className="text-primary-foreground/80 hover:text-accent">{n.label}</Link></li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-accent">Canais oficiais</p>
-          <a href="https://facebook.com" target="_blank" rel="noreferrer" className="mb-4 inline-flex items-center gap-2 text-sm hover:text-accent">
-            <Facebook className="h-4 w-4" /> Página oficial no Facebook
-          </a>
-          <Socials inverted />
-          <p className="mt-3 text-xs text-primary-foreground/60">Outros canais oficiais em breve.</p>
-        </div>
-      </div>
-      <div className="flex flex-col gap-2 border-t border-primary-foreground/15 px-5 py-5 text-xs text-primary-foreground/65 sm:flex-row sm:justify-between lg:px-10">
-        <p>© {new Date().getFullYear()} Muthiana Voice – Voz da Mulher. Todos os direitos reservados.</p>
-        <Link to="/privacidade" className="hover:text-accent">Política de Privacidade</Link>
-      </div>
-    </footer>
-  );
+  return <footer className="bg-primary text-primary-foreground"><div className="site-container grid gap-10 py-12 md:grid-cols-[1.3fr_1fr_0.7fr]"><div><Logo size="sm" /><p className="mt-5 max-w-sm text-sm leading-relaxed text-primary-foreground/75">Associação moçambicana sem fins lucrativos, de âmbito nacional, dedicada ao desenvolvimento e empoderamento da mulher e da rapariga.</p></div><div><p className="mb-5 text-xs font-bold uppercase text-accent">Navegação</p><ul className="space-y-3 text-sm">{footerNav.map(n => <li key={n.to}><Link to={n.to} className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-accent">{n.label}<ArrowUpRight className="size-3" /></Link></li>)}</ul></div><div><p className="mb-4 text-xs font-bold uppercase text-accent">Redes sociais</p><Socials inverted /><p className="mt-3 text-xs leading-relaxed text-primary-foreground/65">Canais oficiais em breve.</p></div></div><div className="border-t border-primary-foreground/15"><div className="site-container flex flex-wrap justify-between gap-3 py-5 text-xs text-primary-foreground/65"><p>© {new Date().getFullYear()} Muthiana Voice – Voz da Mulher.</p><p>Todos os direitos reservados.</p></div></div></footer>;
 }
-
 export function EmBreve({ titulo }: { titulo: string }) {
-  return (
-    <Layout>
-      <section className="px-5 py-20 lg:px-10">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent">Muthiana Voice</p>
-        <h1 className="mt-2 text-4xl font-semibold text-primary">{titulo}</h1>
-        <p className="mt-4 max-w-xl text-muted-foreground">Esta página está em preparação e será disponibilizada em breve.</p>
-      </section>
-    </Layout>
-  );
+  return <Layout><section className="site-container py-20"><p className="section-eyebrow">Muthiana Voice</p><h1 className="mt-2 text-4xl font-semibold text-primary">{titulo}</h1><p className="mt-4 max-w-xl text-muted-foreground">Esta página está em preparação e será disponibilizada em breve.</p></section></Layout>;
 }
