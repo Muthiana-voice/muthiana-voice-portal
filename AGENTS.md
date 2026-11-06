@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Keep homepage presentation in focused site components; project motion uses Embla with reduced-motion support, so dragging and accessibility stay library-managed.
+- Volunteer registration remains a frontend preview until explicitly connected; never report a successful submission without persistent delivery.

@@ -1,4 +1,4 @@
-import { Home, Users, FolderKanban, Newspaper, HandHeart, ShieldCheck, Mail } from "lucide-react";
+import { Home, Users, FolderKanban, Newspaper, HandHeart, ShieldCheck, Mail, Handshake } from "lucide-react";
 
 export const navItems = [
   { to: "/", label: "Página Inicial", icon: Home },
@@ -8,4 +8,5 @@ export const navItems = [
   { to: "/voluntario", label: "Seja Voluntário", icon: HandHeart },
   { to: "/privacidade", label: "Política de Privacidade", icon: ShieldCheck },
   { to: "/contactos", label: "Contactos", icon: Mail },
+  { to: "/parceiros", label: "Parceiros", icon: Handshake },
 ] as const;
