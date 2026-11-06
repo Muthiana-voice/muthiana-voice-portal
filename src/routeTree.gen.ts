@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ContactosRouteImport } from './routes/contactos'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as ProjectosRouteImport } from './routes/projectos'
+import { Route as PublicacoesRouteImport } from './routes/publicacoes'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as VoluntarioRouteImport } from './routes/voluntario'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactosRoute = ContactosRouteImport.update({
+  id: '/contactos',
+  path: '/contactos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectosRoute = ProjectosRouteImport.update({
+  id: '/projectos',
+  path: '/projectos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicacoesRoute = PublicacoesRouteImport.update({
+  id: '/publicacoes',
+  path: '/publicacoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VoluntarioRoute = VoluntarioRouteImport.update({
+  id: '/voluntario',
+  path: '/voluntario',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contactos': typeof ContactosRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/projectos': typeof ProjectosRoute
+  '/publicacoes': typeof PublicacoesRoute
+  '/sobre': typeof SobreRoute
+  '/voluntario': typeof VoluntarioRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contactos': typeof ContactosRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/projectos': typeof ProjectosRoute
+  '/publicacoes': typeof PublicacoesRoute
+  '/sobre': typeof SobreRoute
+  '/voluntario': typeof VoluntarioRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contactos': typeof ContactosRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/projectos': typeof ProjectosRoute
+  '/publicacoes': typeof PublicacoesRoute
+  '/sobre': typeof SobreRoute
+  '/voluntario': typeof VoluntarioRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/contactos'
+    | '/privacidade'
+    | '/projectos'
+    | '/publicacoes'
+    | '/sobre'
+    | '/voluntario'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/contactos'
+    | '/privacidade'
+    | '/projectos'
+    | '/publicacoes'
+    | '/sobre'
+    | '/voluntario'
+  id:
+    | '__root__'
+    | '/'
+    | '/contactos'
+    | '/privacidade'
+    | '/projectos'
+    | '/publicacoes'
+    | '/sobre'
+    | '/voluntario'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactosRoute: typeof ContactosRoute
+  PrivacidadeRoute: typeof PrivacidadeRoute
+  ProjectosRoute: typeof ProjectosRoute
+  PublicacoesRoute: typeof PublicacoesRoute
+  SobreRoute: typeof SobreRoute
+  VoluntarioRoute: typeof VoluntarioRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contactos': {
+      id: '/contactos'
+      path: '/contactos'
+      fullPath: '/contactos'
+      preLoaderRoute: typeof ContactosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projectos': {
+      id: '/projectos'
+      path: '/projectos'
+      fullPath: '/projectos'
+      preLoaderRoute: typeof ProjectosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/publicacoes': {
+      id: '/publicacoes'
+      path: '/publicacoes'
+      fullPath: '/publicacoes'
+      preLoaderRoute: typeof PublicacoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/voluntario': {
+      id: '/voluntario'
+      path: '/voluntario'
+      fullPath: '/voluntario'
+      preLoaderRoute: typeof VoluntarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactosRoute: ContactosRoute,
+  PrivacidadeRoute: PrivacidadeRoute,
+  ProjectosRoute: ProjectosRoute,
+  PublicacoesRoute: PublicacoesRoute,
+  SobreRoute: SobreRoute,
+  VoluntarioRoute: VoluntarioRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
